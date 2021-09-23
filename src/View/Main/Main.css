@@ -1,0 +1,11 @@
+.galerie {
+    width: 100%;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+img {
+    height: 400px;
+}
