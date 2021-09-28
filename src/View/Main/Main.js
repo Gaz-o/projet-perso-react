@@ -17,6 +17,7 @@ function Main () {
     const [Rotate, setRotate] = useState(-120)
     const [MarginR, setMarginR] = useState(0)
     const [MarginL, setMarginL] = useState(0)
+    const [Opac, setOpac] = useState(0)
 
     const changementImg = (e) => {
         let increment = e.nativeEvent.wheelDelta*0.0001;
@@ -29,6 +30,9 @@ function Main () {
         } else {
             setRotate(Rotate - increment*100);
         }
+        if (Boucle > 0.55 && Opac < 1) {
+            setOpac(Opac + increment*2)
+        }
         if (Boucle > 1.77) {
             setAffiche(Img[rand])
             setZoom(0.0012)
@@ -36,6 +40,7 @@ function Main () {
             setBoucle(0);
             setMarginL(0)
             setMarginR(0)
+            setOpac(0)
             if (Flow == "row-reverse") {
                 setFlow("row");
                 setRotate(120)
@@ -44,6 +49,7 @@ function Main () {
                 setRotate(-120)
             }
         } else if (Boucle > 1.20 ){
+            setOpac(Opac - increment*2)
             setTransp(Transp - increment);
             if (Flow == "row-reverse") {
                 setMarginR(MarginR - increment*300)
@@ -53,14 +59,9 @@ function Main () {
                 setRotate(Rotate - increment*100);
             }
         }
-        console.log(Boucle, Rotate);
+        console.log(Boucle, Opac);
     }
 
-    /*  transform: translateZ(0.5rem)
-        transform: rotateX(15deg) 
-        rotateY(-30deg);
-    */
-    
     const classZoom = {
         zoom: Zoom,
         opacity: Transp,
@@ -72,11 +73,19 @@ function Main () {
     const classGalerie = {
         "flex-flow": Flow
     }
+
+    const text = {
+        opacity: Opac
+    }
     
     return (
         <div className="conteneur3d">
             <div  className="galerie" style={classGalerie} onWheel={changementImg}>
                 <img src={Affiche} style={classZoom} />
+                <div className="description" style={text}>
+                    <h2>Mon Tableau</h2>
+                    <p> Description</p>
+                </div>
             </div>
         </div>
     );
